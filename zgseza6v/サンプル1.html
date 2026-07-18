@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAYA to me 様 ホームページサンプル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1D3A2C;
+    --jade:#3F6B57;
+    --jade-bright:#7FB89A;
+    --gold:#C9A063;
+    --cream:#F3EEE1;
+    --cream-dim:#6D786F;
+    --line: rgba(29,58,44,0.16);
+    --display:'Noto Serif JP', serif;
+    --body:'Noto Sans JP', sans-serif;
+    --mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);line-height:1.85;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  .topbar{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:26px 5vw;}
+  .topbar .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;font-size:1.05rem;color:var(--cream);}
+  .topbar .brand svg{width:32px;height:32px;flex-shrink:0;}
+  .topbar a.cta{font-family:var(--mono);font-size:0.74rem;color:var(--cream);border:1px solid rgba(243,237,224,0.6);padding:8px 16px;border-radius:2px;text-decoration:none;}
+  .topbar a.cta:hover{background:rgba(243,237,224,0.16);}
+
+  .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden;}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.02) brightness(0.56);}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg, rgba(29,58,44,0.93) 0%, rgba(29,58,44,0.38) 55%, rgba(29,58,44,0.14) 100%);}
+  .hero-content{position:relative;z-index:2;padding:0 5vw 64px;color:var(--cream);max-width:760px;}
+  .eyebrow{font-family:var(--mono);font-size:0.76rem;color:var(--jade-bright);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--jade-bright);}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(2.0rem,5.6vw,3.4rem);line-height:1.48;margin:0 0 20px;}
+  h1 .accent{color:var(--gold);}
+  .lede{font-size:1.02rem;color:rgba(243,237,224,0.86);max-width:40ch;margin:0 0 30px;}
+  .hero-photo-tag{font-family:var(--mono);font-size:0.72rem;color:rgba(243,237,224,0.7);}
+
+  .band{padding:96px 5vw;}
+  .band.alt{background:#E9E0CC;}
+  .band-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+  .band-head .tag{font-family:var(--mono);font-size:0.76rem;color:var(--jade);letter-spacing:0.1em;text-transform:uppercase;}
+  .band-head h2{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);margin:8px 0 0;}
+
+  .menu-row{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:44px 0;border-bottom:1px solid var(--line);}
+  .menu-row:last-child{border-bottom:none;}
+  .menu-row:nth-child(even){direction:rtl;}
+  .menu-row:nth-child(even) > *{direction:ltr;}
+  .menu-media{aspect-ratio:5/4;border-radius:4px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;}
+  .menu-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .menu-media.icon-media{padding:16%;background:#fff;}
+  .menu-text .num{font-family:var(--mono);font-size:0.76rem;color:var(--jade);letter-spacing:0.08em;}
+  .menu-text h3{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:10px 0 12px;}
+  .menu-text p{color:var(--cream-dim);max-width:36ch;margin:0 0 16px;}
+  .menu-text .price{font-family:var(--mono);color:var(--gold);font-size:0.92rem;}
+  .photo-note{font-family:var(--mono);font-size:0.72rem;color:var(--cream-dim);max-width:900px;margin:36px auto 0;text-align:center;}
+
+  .about-copy{max-width:640px;margin:0 auto 48px;text-align:center;}
+  .about-copy p{color:var(--cream-dim);margin:0 0 16px;}
+  .quote{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.8vw,1.9rem);line-height:1.6;color:var(--ink);margin:28px 0;}
+  .about-photo{max-width:980px;margin:0 auto;aspect-ratio:16/7;border-radius:4px;overflow:hidden;}
+  .about-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  .stat-strip{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .stat{background:var(--cream);padding:28px 24px;}
+  .stat b{display:block;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--jade);margin-bottom:10px;}
+  .stat span{font-size:0.95rem;}
+  .note-small{font-size:0.8rem;color:var(--cream-dim);max-width:900px;margin:20px auto 0;text-align:center;}
+  .map-frame{max-width:980px;margin:40px auto 0;border-radius:4px;overflow:hidden;border:1px solid var(--line);line-height:0;}
+  .map-frame iframe{width:100%;height:340px;border:0;display:block;}
+  .map-note{font-family:var(--mono);font-size:0.74rem;color:var(--cream-dim);text-align:center;margin:14px 0 0;}
+
+  footer{padding:52px 5vw;background:var(--ink);color:var(--cream);}
+  .footer-grid{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+  footer .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;font-size:1.05rem;}
+  footer .brand svg{width:32px;height:32px;flex-shrink:0;}
+  footer .fine{font-family:var(--mono);font-size:0.72rem;color:rgba(243,237,224,0.6);margin-top:6px;}
+  footer .social a{margin-left:14px;font-size:0.82rem;text-decoration:none;color:rgba(243,237,224,0.75);}
+
+  .reveal{opacity:1;transform:none;transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:820px){
+    .menu-row{grid-template-columns:1fr;gap:24px;}
+    .menu-row:nth-child(even){direction:ltr;}
+    .stat-strip{grid-template-columns:1fr;}
+    .band{padding:64px 6vw;}
+    .hero{min-height:78vh;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M15 10 q2 -3 0 -6 M20 9 q2 -3 0 -6 M25 10 q2 -3 0 -6" stroke="#7FB89A" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="15" y="14" width="10" height="4" rx="2" fill="#C9A063"/><circle cx="20" cy="12" r="2" fill="#C9A063"/><path d="M30 21 q6 1 5 8 q-1 6 -6 6" fill="none" stroke="#C9A063" stroke-width="2"/><path d="M10 22 l-6 -2 l2 7 z" fill="#C9A063"/><ellipse cx="20" cy="27" rx="11" ry="8" fill="#F3EEE1" stroke="#3F6B57" stroke-width="2"/></svg>
+    CHAYA to me
+  </div>
+  <a class="cta" href="#visit">アクセス・営業時間</a>
+</div>
+
+<section class="hero">
+  <img src="https://images.pexels.com/photos/35515542/pexels-photo-35515542.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="レトロなアジア風カフェ店内イメージ写真">
+  <div class="hero-content">
+    <div class="eyebrow">仙台市 国分町 / 台湾茶とアジア料理</div>
+    <h1>国分町で、<br><span class="accent">台湾茶とひと休み。</span></h1>
+    <p class="lede">台湾から届くお茶と、創作アジア料理。レトロで懐かしい空間で、ゆっくりお過ごしください。</p>
+    <p class="hero-photo-tag">※ 写真はサンプル用のフリー素材のイメージです。ご契約後、実際の店舗写真に差し替えます。</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="band-head reveal">
+    <div class="tag">MENU</div>
+    <h2>人気メニュー</h2>
+  </div>
+
+  <div class="menu-row reveal">
+    <div class="menu-media">
+      <img src="https://images.pexels.com/photos/36738568/pexels-photo-36738568.jpeg?auto=compress&cs=tinysrgb&w=700" alt="ルーロー飯セットイメージ写真">
+    </div>
+    <div class="menu-text">
+      <span class="num">01 / 看板</span>
+      <h3>CHAYA風ルーロー飯セット</h3>
+      <p>台湾家庭料理の定番、じっくり煮込んだルーロー飯。</p>
+    </div>
+  </div>
+
+  <div class="menu-row reveal">
+    <div class="menu-media">
+      <img src="https://images.pexels.com/photos/6545346/pexels-photo-6545346.jpeg?auto=compress&cs=tinysrgb&w=700" alt="中国茶・台湾茶イメージ写真">
+    </div>
+    <div class="menu-text">
+      <span class="num">02 / お茶</span>
+      <h3>台湾茶・中国茶</h3>
+      <p>台湾から直輸入したお茶を、専用の茶器でゆっくりと。</p>
+    </div>
+  </div>
+
+  <div class="menu-row reveal">
+    <div class="menu-media icon-media" role="img" aria-label="麺料理のイラスト">
+      <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+        <ellipse cx="50" cy="62" rx="32" ry="10" fill="none" stroke="#3F6B57" stroke-width="2.4"/>
+        <path d="M18 62 a32 20 0 0 1 64 0" fill="none" stroke="#3F6B57" stroke-width="2.4"/>
+        <path d="M34 50 q2 -6 0 -12 M50 48 q2 -6 0 -12 M66 50 q2 -6 0 -12" stroke="#C9A063" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="menu-text">
+      <span class="num">03 / 麺</span>
+      <h3>オリジナル太麺</h3>
+      <p>CHAYAオリジナルの、食べ応えのある太麺料理。</p>
+    </div>
+  </div>
+
+  <div class="menu-row reveal">
+    <div class="menu-media">
+      <img src="https://images.pexels.com/photos/31799935/pexels-photo-31799935.jpeg?auto=compress&cs=tinysrgb&w=700" alt="チーズケーキイメージ写真">
+    </div>
+    <div class="menu-text">
+      <span class="num">04 / デザート</span>
+      <h3>チーズケーキ・カッサータ</h3>
+      <p>お茶と一緒に楽しみたい、手作りデザート。</p>
+    </div>
+  </div>
+
+  <p class="photo-note">写真・イラストはサンプル用のイメージです。実際のメニュー内容とは異なります。ご契約後、実際の店舗写真に差し替えます。価格は確認できていないため店舗様にご確認いただく形にしています。</p>
+</section>
+
+<section class="band alt">
+  <div class="band-head reveal">
+    <div class="tag">ABOUT</div>
+    <h2>お店について</h2>
+  </div>
+  <div class="about-copy reveal">
+    <p>CHAYA to meは、仙台市青葉区国分町にあるカフェです。台湾映画のワンシーンのような、アンティーク家具とステンドグラスに彩られたレトロな空間で、台湾茶と創作アジア料理をお楽しみいただけます。</p>
+    <div class="quote">国分町で、台湾茶とひと休み。</div>
+    <p>お支払いは現金のみとなっています。最新の営業情報は、店舗のInstagramをご覧ください。</p>
+  </div>
+  <div class="about-photo reveal">
+    <img src="https://images.pexels.com/photos/35515542/pexels-photo-35515542.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="レトロなアジア風カフェ店内イメージ写真">
+  </div>
+  <p class="photo-note">店内写真はサンプル用のイメージです。ご契約後、実際の店舗写真に差し替えます。</p>
+</section>
+
+<section class="band" id="visit">
+  <div class="band-head reveal">
+    <div class="tag">VISIT</div>
+    <h2>アクセス・営業時間</h2>
+  </div>
+  <div class="stat-strip reveal">
+    <div class="stat">
+      <b>営業時間</b>
+      <span>11:00〜17:00 / 夜営業11:00〜21:00(不定休)</span>
+    </div>
+    <div class="stat">
+      <b>お支払い</b>
+      <span>現金のみ</span>
+    </div>
+  </div>
+  <p class="note-small">※ 営業時間は変更となる場合がございます。最新情報はInstagram(@chaya_sendai)をご確認ください。住所:宮城県仙台市青葉区国分町1-6-15 奥田ビル 3F</p>
+  <div class="map-frame reveal">
+    <iframe
+      src="https://www.google.com/maps?q=仙台市青葉区国分町&output=embed&z=15"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <p class="map-note">※ 地図は国分町エリア周辺を示す目安表示です(番地までの正確な位置は表示していません)。</p>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="brand">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M15 10 q2 -3 0 -6 M20 9 q2 -3 0 -6 M25 10 q2 -3 0 -6" stroke="#7FB89A" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="15" y="14" width="10" height="4" rx="2" fill="#C9A063"/><circle cx="20" cy="12" r="2" fill="#C9A063"/><path d="M30 21 q6 1 5 8 q-1 6 -6 6" fill="none" stroke="#C9A063" stroke-width="2"/><path d="M10 22 l-6 -2 l2 7 z" fill="#C9A063"/><ellipse cx="20" cy="27" rx="11" ry="8" fill="#F3EEE1" stroke="#3F6B57" stroke-width="2"/></svg>
+        CHAYA to me
+      </div>
+      <div class="fine">© 2026 CHAYA to me</div>
+    </div>
+    <div class="social">
+      <a href="#">Instagram</a>
+      <a href="#visit">ご来店</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+</script>
+
+<!--
+  写真クレジット(Pexelsライセンス / 商用可・クレジット表記義務なし。参考のため記載):
+  - Michael Zhafrin: https://www.pexels.com/photo/retro-asian-cafe-interior-with-vintage-posters-35515542/
+  - hung chou: https://www.pexels.com/photo/taiwanese-braised-pork-rice-with-soft-boiled-egg-36738568/
+  - Tima Miroshnichenko: https://www.pexels.com/photo/hand-holding-ceramic-gaiwan-and-pouring-tea-in-glass-teapot-6545346/
+  - Samet Burak Dağlıoğlu: https://www.pexels.com/photo/delicious-lemon-cheesecake-with-cream-topping-31799935/
+  すべて実店舗とは無関係のフリー素材です。ヘッダー・フッターのロゴ(急須のイラスト)は自作のシンプルなSVGです。
+  住所・旧営業時間・メニュー・支払い方法・Instagramアカウントは食べログ「CHAYA」ページの掲載情報に基づく参考情報です。2026年7月頃に店名を「CHAYA to me」に変更しモーニング営業を追加したという情報がweb検索で見つかりましたが、一次情報(公式Instagram等)では未確認のため、営業時間はリニューアル前の情報を掲載し、注記で最新情報の確認を促す形にしています。メニュー価格は情報源に具体的な金額の記載がなかったため、金額を記載せず「価格は店舗にご確認ください」としています。地図はエリア周辺を示す目安表示で、番地までの正確な位置は表示していません。
+  本ファイルは「全面ビジュアル・雑誌風エディトリアル」レイアウトのサンプルです(サンプル2は固定サイドナビ+非対称ベントグリッドのレイアウト)。配色はディープグリーン×ゴールドを基調とした落ち着いたグリーン主体の配色です(サンプル2はテラコッタ×ブラウンを基調とした配色で、意図的に異なる色の方向性にしています)。
+-->
+
+</body>
+</html>
