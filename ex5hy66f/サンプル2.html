@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>b ist 様 ホームページサンプル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE3D2;
+    --paper-soft:#F5EFE3;
+    --ink:#2A1B14;
+    --ink-dim:#6C5C4C;
+    --maroon:#7A2E22;
+    --maroon-deep:#5A1F16;
+    --gold:#C79A57;
+    --line: rgba(42,27,20,0.16);
+    --display:'Shippori Mincho', serif;
+    --body:'Noto Sans JP', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.85;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  .layout{display:flex;min-height:100vh;}
+
+  .rail{
+    width:250px;flex-shrink:0;background:var(--ink);color:var(--paper-soft);
+    position:sticky;top:0;height:100vh;padding:34px 26px;display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .rail .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.08rem;line-height:1.4;}
+  .rail .brand svg{width:32px;height:32px;flex-shrink:0;}
+  .rail nav{display:flex;flex-direction:column;gap:14px;margin-top:44px;}
+  .rail nav a{color:rgba(245,239,227,0.78);text-decoration:none;font-size:0.9rem;padding:4px 0;border-left:2px solid transparent;padding-left:10px;}
+  .rail nav a:hover{color:var(--paper-soft);border-color:var(--gold);}
+  .rail .rail-contact{font-size:0.78rem;color:rgba(245,239,227,0.6);line-height:1.8;}
+
+  main{flex:1;min-width:0;}
+
+  .hero{position:relative;padding:64px 6vw 56px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;}
+  .eyebrow{font-family:var(--display);font-weight:700;font-size:0.9rem;color:var(--maroon);letter-spacing:0.04em;margin-bottom:14px;display:block;}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.8vw,2.5rem);line-height:1.6;margin:0 0 18px;max-width:15ch;}
+  h1 .accent{color:var(--maroon);}
+  .lede{font-size:0.98rem;color:var(--ink-dim);max-width:36ch;margin:0 0 24px;}
+  .hero-photo{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3;box-shadow:10px 10px 0 rgba(42,27,20,0.1);border:3px solid var(--ink);}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .photo-note{font-size:0.76rem;color:var(--ink-dim);margin:12px 2px 0;max-width:60ch;}
+
+  section{padding:56px 6vw;border-top:3px dashed var(--line);}
+  .section-head{margin-bottom:32px;}
+  .section-head .tag{font-family:var(--display);font-weight:700;font-size:0.85rem;color:var(--maroon);display:block;margin-bottom:4px;}
+  .section-head h2{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.4vw,1.7rem);margin:0;}
+
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:110px;gap:16px;}
+  .bento-tile{background:var(--paper-soft);border-radius:14px;overflow:hidden;position:relative;border:3px solid var(--ink);}
+  .bento-tile.large{grid-column:span 2;grid-row:span 2;}
+  .bento-tile.wide{grid-column:span 2;grid-row:span 1;}
+  .bento-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+  .bento-tile .icon-fill{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:14%;}
+  .bento-tile .cap{position:absolute;left:0;right:0;bottom:0;background:rgba(42,27,20,0.86);color:var(--paper-soft);padding:10px 14px;}
+  .bento-tile .cap .name{font-family:var(--display);font-weight:700;font-size:0.9rem;display:block;}
+
+  .about-layered{position:relative;max-width:880px;}
+  .about-layered .photo{border-radius:18px;overflow:hidden;aspect-ratio:16/9;border:3px solid var(--ink);}
+  .about-layered .photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .about-card{
+    background:var(--paper-soft);border:3px solid var(--ink);border-radius:16px;padding:26px 28px;
+    margin:-56px 40px 0 40px;position:relative;max-width:640px;
+  }
+  .about-card p{margin:0 0 12px;color:var(--ink-dim);font-size:0.94rem;}
+  .about-card p:last-child{margin-bottom:0;}
+
+  .info-strip{display:flex;flex-direction:column;gap:0;max-width:640px;}
+  .info-item{display:flex;gap:16px;padding:16px 0;border-bottom:2px dashed var(--line);}
+  .info-item:last-child{border-bottom:none;}
+  .info-item b{font-family:var(--display);font-weight:700;font-size:0.85rem;color:var(--maroon);min-width:110px;flex-shrink:0;}
+  .info-item span{color:var(--ink-dim);font-size:0.92rem;}
+  .note-small{font-size:0.8rem;color:var(--ink-dim);margin:16px 0 0;max-width:60ch;}
+
+  .map-frame{border-radius:18px;overflow:hidden;border:3px solid var(--ink);margin-top:28px;max-width:880px;line-height:0;}
+  .map-frame iframe{width:100%;height:300px;border:0;display:block;}
+  .map-note{font-size:0.78rem;color:var(--ink-dim);margin:12px 0 0;}
+
+  footer{padding:36px 6vw 44px;border-top:3px dashed var(--line);}
+  .footer-grid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+  footer .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1rem;}
+  footer .brand svg{width:28px;height:28px;flex-shrink:0;}
+  footer .fine{font-size:0.78rem;color:var(--ink-dim);margin-top:6px;}
+  footer .social a{margin-left:14px;font-size:0.85rem;text-decoration:none;color:var(--ink-dim);}
+
+  .reveal{opacity:1;transform:none;transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:900px){
+    .layout{flex-direction:column;}
+    .rail{width:100%;height:auto;position:static;flex-direction:row;align-items:center;padding:18px 6vw;}
+    .rail nav{flex-direction:row;margin-top:0;gap:18px;flex-wrap:wrap;}
+    .rail .rail-contact{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    h1{max-width:none;}
+    .bento{grid-template-columns:repeat(2,1fr);}
+    .bento-tile.large{grid-column:span 2;}
+    .about-card{margin:16px 0 0;max-width:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="rail">
+    <div>
+      <div class="brand">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 24 Q8 14 20 14 Q32 14 32 24 Q32 29 20 29 Q8 29 8 24 Z" fill="#F5EFE3" stroke="#2A1B14" stroke-width="2.4"/><path d="M14 17 L17 22 M20 15.5 L20 21.5 M26 17 L23 22" stroke="#C79A57" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M13 10 q1.5 -3 0 -6 M20 9 q1.5 -3 0 -6 M27 10 q1.5 -3 0 -6" stroke="#C79A57" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        b ist
+      </div>
+      <nav>
+        <a href="#menu">メニュー</a>
+        <a href="#about">お店について</a>
+        <a href="#visit">アクセス</a>
+      </nav>
+    </div>
+    <div class="rail-contact">
+      仙台市太白区長町1-6-7<br>10:00〜(パンがなくなり次第終了)<br>月曜・火曜定休(臨時休業あり)<br>Instagram: @b_ist.sendai
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">長町一丁目のベーカリー&カフェ</span>
+          <h1>パンと、ちょっとコーヒー、<br><span class="accent">ちょっとワイン。</span></h1>
+          <p class="lede">長町一丁目駅のそばに構える、小さなパン屋。ハード系のパンを中心に、店内でコーヒーもお楽しみいただけます。</p>
+        </div>
+        <div>
+          <div class="hero-photo">
+            <img src="https://images.pexels.com/photos/35993723/pexels-photo-35993723.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="木の棚に並んだパンのイメージ写真">
+          </div>
+          <p class="photo-note">※ 写真はサンプル用のフリー素材です。ご契約後、実際の店舗写真に差し替えます。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="section-head reveal">
+        <span class="tag">MENU</span>
+        <h2>メニューのご紹介</h2>
+      </div>
+      <div class="bento reveal">
+        <div class="bento-tile large">
+          <img src="https://images.pexels.com/photos/30666735/pexels-photo-30666735.jpeg?auto=compress&cs=tinysrgb&w=700" alt="パンとハーブが並ぶバスケットのイメージ写真">
+          <div class="cap"><span class="name">カンパーニュ</span></div>
+        </div>
+        <div class="bento-tile">
+          <img src="https://images.pexels.com/photos/34800842/pexels-photo-34800842.jpeg?auto=compress&cs=tinysrgb&w=700" alt="クロワッサンとコーヒーのイメージ写真">
+          <div class="cap"><span class="name">クロワッサン</span></div>
+        </div>
+        <div class="bento-tile">
+          <div class="icon-fill" role="img" aria-label="食パンのイラスト">
+            <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+              <path d="M24 86 V52 Q24 22 50 22 Q76 22 76 52 V86 Z" fill="none" stroke="#2A1B14" stroke-width="3.2"/>
+              <line x1="24" y1="86" x2="76" y2="86" stroke="#2A1B14" stroke-width="3.2"/>
+              <path d="M32 48 Q50 36 68 48" fill="none" stroke="#C79A57" stroke-width="2.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="cap"><span class="name">食パン</span></div>
+        </div>
+        <div class="bento-tile wide">
+          <img src="https://images.pexels.com/photos/459489/pexels-photo-459489.jpeg?auto=compress&cs=tinysrgb&w=700" alt="コーヒーのイメージ写真">
+          <div class="cap"><span class="name">コーヒー</span></div>
+        </div>
+      </div>
+      <p class="photo-note">※ 写真・イラストはサンプル用のイメージです。実際のメニュー内容とは異なります。ご契約後、実際の店舗写真に差し替えます。価格は確認できていないため、店舗様にご確認いただく形にしています。</p>
+    </section>
+
+    <section id="about">
+      <div class="section-head reveal">
+        <span class="tag">ABOUT</span>
+        <h2>b istについて</h2>
+      </div>
+      <div class="about-layered reveal">
+        <div class="photo">
+          <img src="https://images.pexels.com/photos/34800842/pexels-photo-34800842.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="クロワッサンとコーヒーのイメージ写真">
+        </div>
+        <div class="about-card">
+          <p>b istは、仙台市太白区長町一丁目にあるパン屋です。パンの販売を中心に営業しており、コーヒーやワインなど店内でお楽しみいただけるメニューも少しずつ増やしていく予定とのことです。</p>
+          <p>最新の営業日・臨時休業のお知らせは、店舗のInstagramをご確認ください。</p>
+        </div>
+      </div>
+      <p class="photo-note">※ 店内・パンの写真はサンプル用のイメージです。ご契約後、実際の店舗写真に差し替えます。</p>
+    </section>
+
+    <section id="visit">
+      <div class="section-head reveal">
+        <span class="tag">VISIT</span>
+        <h2>アクセス・営業時間</h2>
+      </div>
+      <div class="info-strip reveal">
+        <div class="info-item"><b>営業時間</b><span>10:00〜(パンがなくなり次第終了)</span></div>
+        <div class="info-item"><b>定休日</b><span>月曜・火曜(臨時休業あり)</span></div>
+        <div class="info-item"><b>場所</b><span>〒982-0011 宮城県仙台市太白区長町1丁目6-7 コーポ庄子(仙台市地下鉄南北線 長町一丁目駅そば)</span></div>
+        <div class="info-item"><b>Instagram</b><span>@b_ist.sendai</span></div>
+      </div>
+      <p class="note-small">※ 営業時間・定休日は店舗のInstagram投稿時点の情報です。臨時休業を含む最新情報は、Instagram(@b_ist.sendai)を必ずご確認ください。</p>
+      <div class="map-frame reveal">
+        <iframe
+          src="https://www.google.com/maps?q=仙台市太白区長町一丁目&output=embed&z=15"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="map-note">※ 地図は長町一丁目エリア周辺を示す目安表示です(番地までの正確な位置は表示していません)。</p>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="brand">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 24 Q8 14 20 14 Q32 14 32 24 Q32 29 20 29 Q8 29 8 24 Z" fill="#F5EFE3" stroke="#2A1B14" stroke-width="2.4"/><path d="M14 17 L17 22 M20 15.5 L20 21.5 M26 17 L23 22" stroke="#C79A57" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M13 10 q1.5 -3 0 -6 M20 9 q1.5 -3 0 -6 M27 10 q1.5 -3 0 -6" stroke="#C79A57" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+            b ist
+          </div>
+          <div class="fine">© 2026 b ist</div>
+        </div>
+        <div class="social">
+          <a href="#">Instagram</a>
+          <a href="#visit">ご来店</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+</script>
+
+<!--
+  写真クレジット(Pexelsライセンス / 商用可・クレジット表記義務なし。参考のため記載):
+  - wal_: https://www.pexels.com/photo/rustic-bread-display-on-wooden-shelves-35993723/
+  - Natalia Olivera: https://www.pexels.com/photo/rustic-bread-basket-with-herbs-and-assorted-breads-30666735/
+  - Shivam Patil: https://www.pexels.com/photo/delicious-breakfast-croissants-with-coffee-34800842/
+  - Pixabay: https://www.pexels.com/photo/cup-of-coffee-on-saucer-459489/
+  すべて実店舗とは無関係のフリー素材です。ナビ・フッターのロゴ(パンのイラスト)は自作のシンプルなSVGで、実店舗の実際のロゴ(丸い"b ist BREAD&"のワードマーク)とは異なる自作の意匠です。
+  店名・住所・最寄り駅・営業時間・定休日・Instagramアカウント(@b_ist.sendai/フォロワー約4867人)は、2026年7月にb ist公式Instagramのプロフィール文および投稿(7月の営業カレンダー画像)を確認して得た情報です。営業時間は「10:00〜パンがなくなり次第終了」、定休日は月・火を基本としつつ、投稿カレンダー上で水曜(7/15)にも休業マークがあったため「臨時休業あり」と注記しています。メールアドレス・電話番号はGoogleマップ上のリスティングにも掲載がなく確認できなかったため、連絡先はInstagramのみ記載しています。メニュー品目は投稿写真から確認できたパン・コーヒーの種類を基にした仮のサンプルで、価格は記載していません。地図はエリア周辺を示す目安表示で、番地までの正確な位置は表示していません。
+  本ファイルは「固定サイドナビ+非対称ベントグリッド」レイアウトのサンプルです(サンプル1はスティッキーナビ+分割グリッドヒーロー+カード型メニューのレイアウト)。配色はダークブラウン(コーヒー豆のような濃い焦茶)×ゴールドを基調とした、シックで落ち着いた配色です(サンプル1はトースト色×マロンを基調とした、より軽やかで温かみのある配色で、意図的に異なる色の方向性にしています)。
+  見出しの「パンと、ちょっとコーヒー、ちょっとワイン。」は、店舗公式Instagramのプロフィール文で使われている実際のキャッチコピーです(2026-07-19、依頼者からの直接指示によりそのまま採用。通常の営業用サンプルでは実店舗の文言を言い換えますが、今回は例外的に原文のまま掲載しています)。
+-->
+
+</body>
+</html>
